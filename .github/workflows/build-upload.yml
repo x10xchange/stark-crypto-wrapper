@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  PYTHON_VERSION: "3.7"
+  PYTHON_VERSION: "3.9"
   PACKAGE_NAME: "fast_stark_crypto"
 
 jobs:
@@ -61,18 +61,15 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           architecture: x64
       - name: Build wheels
-        uses: messense/maturin-action@v1
-        with:
-          target: ${{ matrix.target }}
-          manylinux: auto
-          args: --release --out dist
-          maturin-version: "v0.13.0"
+        run: |
+          docker run --rm --entrypoint=bash -v $(pwd):/io ghcr.io/pyo3/maturin -c 'for PYBIN in /opt/python/cp3*/bin; do ${PYBIN}/pip install maturin  && "${PYBIN}/maturin" build --out dist -i "${PYBIN}/python" --release --manylinux 2014 ; done'
+
       - name: Install built wheel
         if: matrix.target == 'x86_64'
         run: |
-          pip install dist/${{ env.PACKAGE_NAME }}-*.whl --force-reinstall
-          pip install pytest
-          pytest -v
+          pip${{ env.PYTHON_VERSION }} install --upgrade pip
+          pip${{ env.PYTHON_VERSION }} install ${{env.PACKAGE_NAME}} --no-index --find-links dist --force-reinstall
+          python -c "import ${{env.PACKAGE_NAME}} "
       - name: Upload wheels
         uses: actions/upload-artifact@v2
         with:
