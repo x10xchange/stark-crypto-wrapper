@@ -1,0 +1,16 @@
+[package]
+name = "fast-stark-crypto"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "fast_stark_crypto"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = "0.20.2"
+starknet-crypto = "0.6.1"
+
+[build-dependencies]
+cc = { version = "1" }
+pyo3-build-config = { version = "^0.20" }
