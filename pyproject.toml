@@ -18,7 +18,7 @@ features = ["pyo3/extension-module"]
 
 [tool.poetry]
 name = "fast-stark-crypto"
-version = "0.0.1"
+version = "0.0.2"
 description = "wrapped starkware rust crypto functions"
 authors = ["x10"]
 license = "MIT"
