@@ -87,7 +87,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    needs: [ linux, linux-cross ]
+    needs: [ linux, linux-cross, macos ]
     steps:
       - uses: actions/download-artifact@v3
         with:
