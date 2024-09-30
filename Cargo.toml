@@ -8,6 +8,7 @@ name = "fast_stark_crypto"
 crate-type = ["cdylib"]
 
 [dependencies]
+malachite = "0.4.16"
 pyo3 = "0.20.2"
 starknet-crypto = "0.6.1"
 
